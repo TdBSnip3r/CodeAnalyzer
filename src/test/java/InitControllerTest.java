@@ -5,8 +5,7 @@ import static org.junit.Assert.*;
 public class InitControllerTest {
 
 
-    ArrayList<String> clonePathDirs = new ArrayList<String>();
-    ArrayList<String> repoUrls = new ArrayList<String>();
+
     @Test
     public void jgitCloneRepository() {
 
@@ -14,6 +13,7 @@ public class InitControllerTest {
 
     @Test
     public void jgitDeleteRepository() {
-        
+
     }
+
 }

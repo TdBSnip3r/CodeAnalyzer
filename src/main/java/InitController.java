@@ -91,6 +91,7 @@ public class InitController {
             System.out.println("Il path non fa riferimento ad un percorso valido");
             return false;
         }
+
             try {
                 System.out.println("Cloning "+this.repoUrl+" into "+this.clonepathDir);
                 Git clone = Git.cloneRepository()
