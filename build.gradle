@@ -13,4 +13,8 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    //Import di JGit
+    compile group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '4.8.0.201706111038-r'
+    //Per una dipendenza di JGit
+    testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
 }
