@@ -26,6 +26,7 @@ public class InitController {
     //Variabili di istanza:
     private String clonepathDir;
     private String repoUrl;
+    private RepositoryJava repository;
 
     public static void setInstance(InitController instance) {
         InitController.instance = instance;
@@ -40,6 +41,14 @@ public class InitController {
         }catch(Exception e){
             throw new RuntimeException("Exception occured in creating singleton instance");
         }
+    }
+
+    public RepositoryJava getRepository() {
+        return repository;
+    }
+
+    public void setRepository(RepositoryJava repository) {
+        this.repository = repository;
     }
 
     public static InitController getInstance(){
@@ -91,8 +100,7 @@ public class InitController {
             System.out.println("Il path non fa riferimento ad un percorso valido");
             return false;
         }
-
-            try {
+        try {
                 System.out.println("Cloning "+this.repoUrl+" into "+this.clonepathDir);
                 Git clone = Git.cloneRepository()
                         .setURI(repoUrl)
@@ -100,6 +108,11 @@ public class InitController {
                         .call();
                 System.out.println("Completed Cloning");
                 clone.close();
+                if(!analizeProjectThreeAndSearchJavasResources(this.clonepathDir))
+                {
+                    System.out.println("Non ci sono file Java al suo interno");
+                    return false;
+                }
                 return true;
             } catch (GitAPIException e) {
                 System.out.println("Exception occurred while cloning repo");
@@ -229,4 +242,68 @@ public class InitController {
             folder.delete();
         }
     }
+
+    //Funzione ricorsiva per analizzare il FileSystem di progetto!
+    private boolean analizeProjectThreeAndSearchJavasResources(String path)
+    {
+        File folder = new File(path);
+        File[] files = folder.listFiles();
+        if(files!=null)
+        {
+            for(File f: files) {
+                if(f.isDirectory()) {
+                    analizeProjectThreeAndSearchJavasResources(f.getPath());
+                } else {
+                    //Se è un file Java
+                    System.out.println("Analize path: "+f.getPath()+" -FileName: "+f.getName());
+                    if(isJavaFile(f))
+                    {
+                        System.out.println("File Java trovato: "+f.getName());
+                        createJavaStructureAndAddToRepositoryJava(f);
+                    }
+                }
+            }
+
+        }
+        return true;
+    }
+
+    private boolean isJavaFile(File filename)
+    {
+        //Prendo il path relativo al percorso
+        String name = filename.getName();
+        //Genero una stringa che conterrà l'estenzione "java" se si parla di file Java
+        String extension = null;
+        //Creo un tokenizer per identificare il deliminatore "."
+        StringTokenizer str = new StringTokenizer(name,"."); int i = 0;
+        //Se ci troviamo dinnanzi ad un file Java avremo bisogno di 2 token per arrivare all'estensione. Es: main.java token=main token java
+        while(i<2 && str.hasMoreElements())
+        {
+            extension = new String(str.nextToken());
+        }
+        //Se ci troviamo dinnanzi ad un file java avremo come estensione "java" altrimenti qualsiasi altra cosa
+        if(extension.equalsIgnoreCase("java")) return true;
+        //qualsiasi altra cosa
+        return false;
+    }
+
+    private void createJavaStructureAndAddToRepositoryJava(File filejava)
+    {
+        StringTokenizer str = new StringTokenizer(filejava.getName(),".");
+        String nameFile = str.nextToken();
+        String path = filejava.getPath();
+        JavaStructure javaStr = new JavaStructure(nameFile,path);
+        this.repository.addJavaStructure(javaStr);
+    }
+
+    private void printRepository()
+    {
+        for(JavaStructure j : this.repository.getStructure())
+        {
+            j.getInfo();
+        }
+    }
+
+
+
 }
