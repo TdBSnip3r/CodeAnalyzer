@@ -1,22 +1,10 @@
-
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.LsRemoteCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.TransportException;
-import org.eclipse.jgit.errors.RepositoryNotFoundException;
-import org.eclipse.jgit.lib.Repository;
-
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -28,6 +16,7 @@ public class InitController {
     private String repoUrl;
     private RepositoryJava repository;
 
+    //Singleton Pattern
     public static void setInstance(InitController instance) {
         InitController.instance = instance;
     }
@@ -71,25 +60,6 @@ public class InitController {
         this.repoUrl = repoUrl;
     }
 
-    public void cloneRepository(String repoUrl, String clonepathDir) throws IOException {
-
-        //Acquisire il nome del repository
-        String nameRepo = getRepositoryNameFromPath(repoUrl);
-        System.out.println("Repo Name: "+nameRepo);
-        //Verificare che il clonePathDir sia un path valido
-        if(Files.exists(Paths.get(clonepathDir)))
-        {
-            System.out.println("Cloning "+repoUrl+" into "+clonepathDir);
-            String cmd1 = new String("git clone "+repoUrl+" "+clonepathDir+"\\"+nameRepo);
-            ArrayList<String> commands = new ArrayList<String>(); commands.add(cmd1);
-            executeListOfProcess(commands);
-        }
-        else
-        {
-            System.out.println("Directory inesistente");
-        }
-
-    }
 
     public boolean jgitCloneRepository() {
         File file = new File(this.clonepathDir);
@@ -127,33 +97,6 @@ public class InitController {
     }
 
 
-    private void executeListOfProcess(ArrayList<String> processes) throws IOException {
-        StringBuilder output = new StringBuilder();
-        for(String str : processes) {
-            String s = null;
-            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", str);
-            builder.redirectErrorStream(true);
-            Process p = builder.start();
-            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while (true) {
-                line = r.readLine();
-                if (line == null) { break; }
-                System.out.println(line);
-            }
-        }
-    }
-
-    private String getDirectoryNameFromPath(String path)
-    {
-        StringTokenizer tokenizer = new StringTokenizer(path,"\\");
-        String name = null;
-        while (tokenizer.hasMoreTokens()) {
-            name = tokenizer.nextToken();
-        }
-        return name;
-    }
-
     private String getRepositoryNameFromPath(String path)
     {
         StringTokenizer tokenizer = new StringTokenizer(path,"/");
@@ -163,26 +106,6 @@ public class InitController {
         }
         tokenizer = new StringTokenizer(name,".");
         return tokenizer.nextToken();
-    }
-
-    private boolean isUrlExist(String repoUrl){
-        try
-        {
-            URL url = new URL("http://www.example.com");
-            HttpURLConnection huc = (HttpURLConnection) url.openConnection();
-            int responseCode = huc.getResponseCode();
-            System.out.println("ResponseCode: "+responseCode);
-            if(responseCode == 404)
-            {
-                return false;
-            }
-        }
-        catch(IOException e)
-        {
-            return false;
-        }
-
-        return true;
     }
 
     private boolean isRepoUrl(String repoUrl)
