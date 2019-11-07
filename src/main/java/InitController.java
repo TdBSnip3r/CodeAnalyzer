@@ -16,7 +16,7 @@ public class InitController {
     private String repoUrl;
     private RepositoryJava repository;
 
-    //Singleton Pattern
+    //Singleton Pattern:
     public static void setInstance(InitController instance) {
         InitController.instance = instance;
     }
