@@ -62,6 +62,7 @@ public class InitController {
 
 
     public boolean jgitCloneRepository() {
+        //Genera un file che indica il path dove si vuole clonare il repository
         File file = new File(this.clonepathDir);
         //Caso RepoUrl inesistente
         if(!isRepoUrl(this.repoUrl)) return false;
