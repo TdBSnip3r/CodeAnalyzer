@@ -183,7 +183,9 @@ public class InitController {
                     if(isJavaFile(f))
                     {
                         System.out.println("File Java trovato: "+f.getName());
-                        createJavaStructureAndAddToRepositoryJava(f);
+                        boolean done = createJavaStructureAndAddToRepositoryJava(f);
+                        if(!done)
+                            System.out.println("C'è stato un problema con un File ");
                     }
                 }
             }
@@ -211,13 +213,15 @@ public class InitController {
         return false;
     }
 
-    private void createJavaStructureAndAddToRepositoryJava(File filejava)
+    private boolean createJavaStructureAndAddToRepositoryJava(File filejava)
     {
-        StringTokenizer str = new StringTokenizer(filejava.getName(),".");
+        /*StringTokenizer str = new StringTokenizer(filejava.getName(),".");
         String nameFile = str.nextToken();
-        String path = filejava.getPath();
-        JavaStructure javaStr = new JavaStructure(nameFile,path);
+        String path = filejava.getPath();*/
+        JavaStructure javaStr = new JavaStructure(filejava);
+        boolean done = javaStr.generateStructure();
         this.repository.addJavaStructure(javaStr);
+        return done;
     }
 
     private void printRepository()
