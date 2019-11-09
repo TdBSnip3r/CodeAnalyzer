@@ -1,3 +1,5 @@
+import org.apache.commons.codec.binary.StringUtils;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ public class JavaStructure {
     private File fileJava;
     private String nameFile;
     private String pathFile;
+    private ArrayList<String> importlst;
 
     //Tutto il codice Java in una lista di stringhe
     ArrayList<String> stringsCode;
@@ -28,22 +31,27 @@ public class JavaStructure {
     private int numbOfTab = 0;                          //TABULAZIONI
     private int numbOfSpecialChar = 0;                  //CARATTERI SPECIALI
 
+    //Variabili per numero di costruttori,import,function
+    private int numbOfImport;
 
     public JavaStructure(String nameFile, String pathFile)
     {
         this.nameFile = nameFile;
         this.pathFile = pathFile;
         this.stringsCode = new ArrayList<String>();
+        this.importlst = new ArrayList<String>();
     }
 
     public JavaStructure()
     {
         this.stringsCode = new ArrayList<String>();
+        this.importlst = new ArrayList<String>();
     }
 
     public JavaStructure(File filejava)
     {
         this.stringsCode = new ArrayList<String>();
+        this.importlst = new ArrayList<String>();
         this.pathFile = filejava.getPath();
         String nameWithExtension = filejava.getName();
         StringTokenizer str = new StringTokenizer(nameWithExtension,".");
@@ -55,8 +63,9 @@ public class JavaStructure {
     {
         boolean readDone = readFile();
         boolean staticCode = staticCodeAnalysis();
+        boolean importDone = detectImport();
         //TUTTI IN AND
-        return (readDone && staticCode);
+        return (readDone && staticCode && importDone);
     }
 
     public String getNameFile() {
@@ -98,6 +107,11 @@ public class JavaStructure {
         System.out.println("TAB (tabulazioni): "+this.numbOfTab);
         System.out.println("EMPTY LINE (linee vuote):  "+this.numbOfEmpyLine);
         System.out.println("CODE LINE (linee codice):  "+this.numbOfCodeLine);
+        System.out.println("#############################");
+        System.out.println("##########IMPORT#############");
+        System.out.println("IMPORT LINE (linee import):  "+this.numbOfImport);
+        for(String s : this.importlst) System.out.println("import "+s);
+
     }
 
     //LA SEGUENTE FUNZIONE LEGGE IL CONTENUTO DEL CODICE JAVA TROVATO LINEA A LINEA IN UNA LISTA DI STRINGHE
@@ -177,4 +191,65 @@ public class JavaStructure {
         }
         return true;
     }
+
+
+    public boolean detectImport()
+    {
+        String findStr = "import";
+        ArrayList<Integer> indexOfimport = new ArrayList<Integer>();
+        for(String s : this.stringsCode)
+        {
+            if(!s.isEmpty())
+            {
+                //Rimozione di tutti gli spazi nella stringa all'inizio in mezzo e alla fine.
+                String fixStr = s.replaceAll(" ","");
+                indexOfimport.clear();
+                //Determina quanti import multipli per rigo ci sono e estrare gli indici
+                int lastIndex = 0;
+                int count = 0;
+                while(lastIndex != -1){
+                    lastIndex = fixStr.indexOf(findStr,lastIndex);
+                    if(lastIndex != -1){
+                        count ++;
+                        indexOfimport.add(lastIndex);
+                        lastIndex += findStr.length();
+                    }
+                }
+                if(count>0)
+                {
+                    int importLenght = findStr.length();
+                    System.out.println("COUNT: "+count);
+                    for(int index : indexOfimport) System.out.println("Index: "+index);
+                    System.out.println("fixStr: "+fixStr);
+                    this.numbOfImport += count;
+                    //Estrazione di tutti i valori
+                    int i = 0;
+                    for(i=0; i <= count-1 ;i++)
+                    {
+                        if(i==count-1)
+                        {
+                            //Preso alla fine, ultimo import
+                            this.importlst.add( fixStr.substring( (indexOfimport.get(i)+importLenght),fixStr.length()-1) );
+                        }
+                        else if(i==0)
+                        {
+                            //Preso all'inizio (primo import)
+                            this.importlst.add( fixStr.substring(importLenght,indexOfimport.get(i+1)) );
+                        }
+                        else
+                        {
+                            //Preso tra 2 import
+                            this.importlst.add( fixStr.substring( (indexOfimport.get(i)+importLenght),indexOfimport.get(i+1)) );
+                        }
+
+                    }
+                }
+            }
+
+            //Reset del conteggio
+        }
+        return true;
+    }
+
+
 }

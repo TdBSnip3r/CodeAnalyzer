@@ -81,7 +81,9 @@ public class InitController {
                 clone.close();
                 if(!analizeProjectThreeAndSearchJavasResources(this.clonepathDir))
                 {
+                    //TODO: Interfaccia grafica per riferire che non ci sono file Java al suo interno
                     System.out.println("Non ci sono file Java al suo interno");
+                    //TODO: Va eliminato il repository appena scaricato
                     return false;
                 }
                 return true;
@@ -170,6 +172,7 @@ public class InitController {
     //Funzione ricorsiva per analizzare il FileSystem di progetto!
     private boolean analizeProjectThreeAndSearchJavasResources(String path)
     {
+        boolean precenceOfJavaFile = false;
         File folder = new File(path);
         File[] files = folder.listFiles();
         if(files!=null)
@@ -182,16 +185,17 @@ public class InitController {
                     System.out.println("Analize path: "+f.getPath()+" -FileName: "+f.getName());
                     if(isJavaFile(f))
                     {
+                        precenceOfJavaFile=true;
                         System.out.println("File Java trovato: "+f.getName());
                         boolean done = createJavaStructureAndAddToRepositoryJava(f);
+                        //TODO: Interfacciarsi con schermata grafica dopo un problema con file
                         if(!done)
-                            System.out.println("C'è stato un problema con un File ");
+                            System.out.println("C'è stato un problema con un File: "+f.getName()+" pertanto non aggiunto a Repository");
                     }
                 }
             }
-
         }
-        return true;
+        return precenceOfJavaFile;
     }
 
     private boolean isJavaFile(File filename)
@@ -215,13 +219,14 @@ public class InitController {
 
     private boolean createJavaStructureAndAddToRepositoryJava(File filejava)
     {
-        /*StringTokenizer str = new StringTokenizer(filejava.getName(),".");
-        String nameFile = str.nextToken();
-        String path = filejava.getPath();*/
         JavaStructure javaStr = new JavaStructure(filejava);
         boolean done = javaStr.generateStructure();
-        this.repository.addJavaStructure(javaStr);
-        return done;
+        if(done)
+        {
+            this.repository.addJavaStructure(javaStr);
+            return true;
+        }
+       return false;
     }
 
     private void printRepository()
