@@ -27,6 +27,7 @@ public class RepositoryJava {
         for(JavaStructure j : this.structure)
         {
             j.getInfo();
+
         }
     }
 }

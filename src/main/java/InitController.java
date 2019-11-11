@@ -97,6 +97,7 @@ public class InitController {
                 return false;
             }
 
+
     }
 
 
@@ -209,7 +210,7 @@ public class InitController {
         //Se ci troviamo dinnanzi ad un file Java avremo bisogno di 2 token per arrivare all'estensione. Es: main.java token=main token java
         while(i<2 && str.hasMoreElements())
         {
-            extension = new String(str.nextToken());
+            extension = str.nextToken();
         }
         //Se ci troviamo dinnanzi ad un file java avremo come estensione "java" altrimenti qualsiasi altra cosa
         if(extension.equalsIgnoreCase("java")) return true;

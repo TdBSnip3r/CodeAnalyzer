@@ -1,0 +1,18 @@
+<FindBugsFilter>
+  <!--
+  <Match>
+    <Confidence value="2"/>
+    <Rank value="11"/>
+    <Bug category="CORRECTNESS,MT_CORRECTNESS,SECURITY,PERFORMANCE,MALICIOUS_CODE"/>
+    <Package name="~.+" />
+  </Match> -->
+  <Match>
+    <Bug pattern="RR_NOT_CHECKED, EI_EXPOSE_REP, EI_EXPOSE_REP2, SE_TRANSIENT_FIELD_NOT_RESTORED" />
+  </Match>
+
+  <!-- Escludere intere categorie -->
+  <Match>
+    <Bug category="PERFORMANCE,STYLE"/>
+  </Match>
+
+</FindBugsFilter>

@@ -1,9 +1,60 @@
 plugins {
     id 'java'
+    id 'checkstyle'
+    id 'pmd'
+    id 'findbugs'
 }
 
 group 'com.codeAnalyzer'
 version '1.0-SNAPSHOT'
+
+findbugs{
+    toolVersion '3.0.1'
+    //IncludeFilter assume che non ci sono regole attive se non quelle espresse nell'xml
+    includeFilter = file('config/findbugs/findbugs-ideaInc.xml')
+    //ExcludeFilter il contrario (CIT. Augustus De Morgan)
+    //excludeFilter = file('config/findbugs/findbugs-idea.xml')
+    //findbugsTest.enabled=false
+    //effort 'max'
+    //reportLevel 'high'
+    ignoreFailures = false
+}
+
+findbugsMain{
+    source ='src/main/java'
+}
+
+findbugsTest{
+    source ='src/test/java'
+}
+
+
+pmd{
+    toolVersion '6.0.1'
+    ruleSetFiles = files("config/pmd/pmd.xml")
+    ignoreFailures = true
+}
+
+pmdMain {
+    source ='src/main/java'
+}
+
+pmdTest {
+    source ='src/test/java'
+}
+
+checkstyle {
+    toolVersion '8.25'
+    ignoreFailures = true
+    configFile file("config/checkstyle/checkstyle.xml")
+}
+
+checkstyleMain {
+    source ='src/main/java'
+}
+checkstyleTest {
+    source ='src/test/java'
+}
 
 sourceCompatibility = 1.8
 
@@ -11,10 +62,13 @@ repositories {
     mavenCentral()
 }
 
+
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     //Import di JGit
     compile group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '4.8.0.201706111038-r'
     //Per una dipendenza di JGit
     testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
+    checkstyle 'com.puppycrawl.tools:checkstyle:8.25'
 }
