@@ -213,7 +213,7 @@ public class InitController {
             extension = str.nextToken();
         }
         //Se ci troviamo dinnanzi ad un file java avremo come estensione "java" altrimenti qualsiasi altra cosa
-        if(extension.equalsIgnoreCase("java")) return true;
+        if("java".equalsIgnoreCase(extension)) return true;
         //qualsiasi altra cosa
         return false;
     }
@@ -230,13 +230,13 @@ public class InitController {
        return false;
     }
 
-    private void printRepository()
+    /*private void printRepository()
     {
         for(JavaStructure j : this.repository.getStructure())
         {
             j.getInfo();
         }
-    }
+    }*/
 
 
 

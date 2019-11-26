@@ -1,5 +1,3 @@
-import org.apache.commons.codec.binary.StringUtils;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -7,13 +5,31 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class JavaStructure {
+
     private File fileJava;
     private String nameFile;
     private String pathFile;
+
+    public ArrayList<String> getImportlst() {
+        return importlst;
+    }
+
+    public void setImportlst(ArrayList<String> importlst) {
+        this.importlst = importlst;
+    }
+
     private ArrayList<String> importlst;
 
+    public ArrayList<String> getStringsCode() {
+        return stringsCode;
+    }
+
+    public void setStringsCode(ArrayList<String> stringsCode) {
+        this.stringsCode = stringsCode;
+    }
+
     //Tutto il codice Java in una lista di stringhe
-    ArrayList<String> stringsCode;
+    private ArrayList<String> stringsCode;
 
     //Variabili per la sezione statica del codice
     private int numbOfPoint = 0;                        //PUNTI
@@ -184,6 +200,8 @@ public class JavaStructure {
                     case '\t':
                         this.numbOfTab++;
                         break;
+                    default:
+                        break;
                 }
             }
             if(s.isEmpty()) this.numbOfEmpyLine++;
@@ -251,5 +269,135 @@ public class JavaStructure {
         return true;
     }
 
+    // SOLUZIONE ERRORI PMD
+    // REGOLA: BeanMembersShouldSerialize
+    // Found non-transient, non-static member. Please mark as transient or provide accessors.
+    // SOLUZIONE: creare GETTER e SETTER per ogni variabile d'istanza della classe
+    public File getFileJava() {
+        return fileJava;
+    }
 
+    public void setFileJava(File fileJava) {
+        this.fileJava = fileJava;
+    }
+
+    public int getNumbOfPoint() {
+        return numbOfPoint;
+    }
+
+    public void setNumbOfPoint(int numbOfPoint) {
+        this.numbOfPoint = numbOfPoint;
+    }
+
+    public int getNumbOfComma() {
+        return numbOfComma;
+    }
+
+    public void setNumbOfComma(int numbOfComma) {
+        this.numbOfComma = numbOfComma;
+    }
+
+    public int getNumbOfCircleParenthesisOpen() {
+        return numbOfCircleParenthesisOpen;
+    }
+
+    public void setNumbOfCircleParenthesisOpen(int numbOfCircleParenthesisOpen) {
+        this.numbOfCircleParenthesisOpen = numbOfCircleParenthesisOpen;
+    }
+
+    public int getNumbOfCircleParenthesisClose() {
+        return numbOfCircleParenthesisClose;
+    }
+
+    public void setNumbOfCircleParenthesisClose(int numbOfCircleParenthesisClose) {
+        this.numbOfCircleParenthesisClose = numbOfCircleParenthesisClose;
+    }
+
+    public int getNumbOfSquareParenthesisOpen() {
+        return numbOfSquareParenthesisOpen;
+    }
+
+    public void setNumbOfSquareParenthesisOpen(int numbOfSquareParenthesisOpen) {
+        this.numbOfSquareParenthesisOpen = numbOfSquareParenthesisOpen;
+    }
+
+    public int getNumbOfSquareParenthesisClose() {
+        return numbOfSquareParenthesisClose;
+    }
+
+    public void setNumbOfSquareParenthesisClose(int numbOfSquareParenthesisClose) {
+        this.numbOfSquareParenthesisClose = numbOfSquareParenthesisClose;
+    }
+
+    public int getNumbOfGraphParenthesisOpen() {
+        return numbOfGraphParenthesisOpen;
+    }
+
+    public void setNumbOfGraphParenthesisOpen(int numbOfGraphParenthesisOpen) {
+        this.numbOfGraphParenthesisOpen = numbOfGraphParenthesisOpen;
+    }
+
+    public int getNumbOfGraphParenthesisClose() {
+        return numbOfGraphParenthesisClose;
+    }
+
+    public void setNumbOfGraphParenthesisClose(int numbOfGraphParenthesisClose) {
+        this.numbOfGraphParenthesisClose = numbOfGraphParenthesisClose;
+    }
+
+    public int getNumbOfSemicolons() {
+        return numbOfSemicolons;
+    }
+
+    public void setNumbOfSemicolons(int numbOfSemicolons) {
+        this.numbOfSemicolons = numbOfSemicolons;
+    }
+
+    public int getNumbOfSpace() {
+        return numbOfSpace;
+    }
+
+    public void setNumbOfSpace(int numbOfSpace) {
+        this.numbOfSpace = numbOfSpace;
+    }
+
+    public int getNumbOfEmpyLine() {
+        return numbOfEmpyLine;
+    }
+
+    public void setNumbOfEmpyLine(int numbOfEmpyLine) {
+        this.numbOfEmpyLine = numbOfEmpyLine;
+    }
+
+    public int getNumbOfCodeLine() {
+        return numbOfCodeLine;
+    }
+
+    public void setNumbOfCodeLine(int numbOfCodeLine) {
+        this.numbOfCodeLine = numbOfCodeLine;
+    }
+
+    public int getNumbOfTab() {
+        return numbOfTab;
+    }
+
+    public void setNumbOfTab(int numbOfTab) {
+        this.numbOfTab = numbOfTab;
+    }
+
+    public int getNumbOfSpecialChar() {
+        return numbOfSpecialChar;
+    }
+
+    public void setNumbOfSpecialChar(int numbOfSpecialChar) {
+        this.numbOfSpecialChar = numbOfSpecialChar;
+    }
+
+    public int getNumbOfImport() {
+        return numbOfImport;
+    }
+
+    public void setNumbOfImport(int numbOfImport) {
+        this.numbOfImport = numbOfImport;
+    }
 }

@@ -8,41 +8,93 @@
         The Basic ruleset contains a collection of good practices which should be followed.
     </description>
 
-    <!-- Rules, that have been moved into a category -->
-
-    <rule ref="category/java/errorprone.xml/AvoidBranchingStatementAsLastInLoop" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/AvoidDecimalLiteralsInBigDecimalConstructor" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/AvoidMultipleUnaryOperators" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/AvoidUsingOctalValues" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/BrokenNullCheck" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/CheckSkipResult" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/ClassCastExceptionWithToArray" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/DontUseFloatTypeForLoopIndices" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/JumbledIncrementer" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/MisplacedNullCheck" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/OverrideBothEqualsAndHashcode" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/ReturnFromFinallyBlock" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/UnconditionalIfStatement" deprecated="true" />
-
-    <rule ref="category/java/multithreading.xml/AvoidThreadGroup" deprecated="true" />
-    <rule ref="category/java/multithreading.xml/DontCallThreadRun" deprecated="true" />
-    <rule ref="category/java/multithreading.xml/DoubleCheckedLocking" deprecated="true" />
-
-    <rule ref="category/java/bestpractices.xml/AvoidUsingHardCodedIP" deprecated="true" />
-    <rule ref="category/java/bestpractices.xml/CheckResultSet" deprecated="true" />
-
-    <rule ref="category/java/codestyle.xml/ExtendsObject" deprecated="true" />
-    <rule ref="category/java/codestyle.xml/ForLoopShouldBeWhileLoop" deprecated="true" />
-
-    <rule ref="category/java/performance.xml/BigIntegerInstantiation" deprecated="true" />
-    <rule ref="category/java/performance.xml/BooleanInstantiation" deprecated="true" />
-
-    <rule ref="category/java/design.xml/CollapsibleIfStatements" deprecated="true" />
-    <rule ref="category/java/design.xml/SimplifiedTernary" deprecated="true" />
-
-    <rule ref="category/java/errorprone.xml" >
-        <exclude name="DataflowAnomalyAnalysis"/>
-        <exclude name="BeanMembersShouldSerialize"/>
+    <rule ref="category/java/errorprone.xml">
+        <exclude name="DataflowAnomalyAnalysis" />
     </rule>
+    <!-- Rules, that have been moved into a category -->
+    <!-- BEST PRATICES RULES -->
+    <rule ref="category/java/bestpractices.xml/AbstractClassWithoutAbstractMethod" />   <!-- La classe astratta senza metodi astratti -->
+    <rule ref="category/java/bestpractices.xml/ArrayIsStoredDirectly" />                <!-- Creare una copia di un Array prima di passarlo come parametro -->
+    <rule ref="category/java/bestpractices.xml/AvoidReassigningParameters" />           <!-- Riassegnazione di parametri -->
+    <rule ref="category/java/bestpractices.xml/AvoidStringBufferField" />               <!-- Limita l'utilizzo di Builder come StringBuilder -->
+    <rule ref="category/java/bestpractices.xml/DefaultLabelNotLastInSwitchStmt" />      <!-- Deve essere presente il Default statement di uno switch MA ALLA FINE-->
+    <rule ref="category/java/bestpractices.xml/ForLoopCanBeForeach" />                  <!-- Suggerisce quanto l'utilizzatissimo loop statement può essere sostituito da foreach -->
+    <rule ref="category/java/bestpractices.xml/MethodReturnsInternalArray" />           <!-- Restituire sempre una copia di un parametro mai il parametro stesso -->
+    <rule ref="category/java/bestpractices.xml/OneDeclarationPerLine" />                <!-- Nessun multilinee di dichiarazione -->
+    <rule ref="category/java/bestpractices.xml/PositionLiteralsFirstInCaseInsensitiveComparisons" /> <!-- Mi limiterò a questo -->
+    <rule ref="category/java/bestpractices.xml/PositionLiteralsFirstInComparisons" />
+    <rule ref="category/java/bestpractices.xml/SwitchStmtsShouldHaveDefault" />         <!-- Deve essere presente il Default statement di uno switch -->
+    <rule ref="category/java/bestpractices.xml/UnusedFormalParameter" />                <!-- Si devono usare tutti i parametri nei metodi -->
+    <rule ref="category/java/bestpractices.xml/UnusedImports" />                        <!-- Non si devono avere import inutilizzati -->
+    <rule ref="category/java/bestpractices.xml/UnusedLocalVariable" />                  <!-- Non si devono avere variabili locali mai utilizzate -->
+    <rule ref="category/java/bestpractices.xml/UnusedPrivateField" />                   <!-- Non si devono avere variabili d'istanza private mai utilizzate -->
+    <rule ref="category/java/bestpractices.xml/UnusedPrivateMethod" />                  <!-- Non si devono avere metodi privati mai utilizzate -->
+
+    <!-- FINISH BEST PRATICES RULES -->
+
+    <!-- ERROR PRONE RULES -->
+
+    <rule ref="category/java/errorprone.xml/AvoidAssertAsIdentifier" />                 <!-- Non è possibile definire una variabile come Assert -->
+    <rule ref="category/java/errorprone.xml/AvoidEnumAsIdentifier" />                   <!-- Non è possibile usare enum come identificatore -->
+    <rule ref="category/java/errorprone.xml/AvoidFieldNameMatchingMethodName" />        <!-- Non avere un identificativo identico ad un metodo -->
+    <rule ref="category/java/errorprone.xml/AvoidFieldNameMatchingTypeName" />          <!-- Non avere un identificativo identico a quello della classe -->
+    <rule ref="category/java/errorprone.xml/AvoidInstanceofChecksInCatchClause" />      <!-- Normalissimo -->
+    <rule ref="category/java/errorprone.xml/AvoidMultipleUnaryOperators" />             <!-- Non avere multipli operatori unari -->
+    <rule ref="category/java/errorprone.xml/BadComparison" />                           <!-- Evitare comparazioni con NaN -->
+    <rule ref="category/java/errorprone.xml/BeanMembersShouldSerialize" />              <!-- Classi Bean devono essere serializable -->
+    <rule ref="category/java/errorprone.xml/BrokenNullCheck" />                         <!-- Un confronto con NULL é difettoso e puó provocare NullPointerException -->
+    <rule ref="category/java/errorprone.xml/ClassCastExceptionWithToArray" />           <!-- Evita CastException per il metodo toArray() -->
+    <rule ref="category/java/errorprone.xml/CloneMethodMustBePublic" />                 <!-- Il metodo clone() deve essere public -->
+    <rule ref="category/java/errorprone.xml/CloneMethodMustImplementCloneable" />       <!-- Il metodo clone() deve essere implementare Clonable -->
+    <rule ref="category/java/errorprone.xml/CloneMethodReturnTypeMustMatchClassName" /> <!-- Il metodo clone() deve ritornare il tipo della classe clonata -->
+    <rule ref="category/java/errorprone.xml/CloneThrowsCloneNotSupportedException" />   <!-- Il metodo clone() lancia l'eccezione CloneNotSupportedException -->
+    <rule ref="category/java/errorprone.xml/DoNotCallGarbageCollectionExplicitly" />    <!-- Non invocare il Garbage Collector esplicitamente -->
+    <rule ref="category/java/errorprone.xml/EmptyTryBlock" />                           <!-- Evitare dei blocchi TRY vuoti, inutili -->
+    <rule ref="category/java/errorprone.xml/MethodWithSameNameAsEnclosingClass" />      <!-- Non avere un metodo con lo stesso nome della classe -->
+    <rule ref="category/java/errorprone.xml/MisplacedNullCheck" />                      <!-- Un confronto con NULL é difettoso e puó provocare NullPointerException -->
+    <rule ref="category/java/errorprone.xml/MissingSerialVersionUID" />                 <!-- Classi Serializable devono avere un SerialVersionUID -->
+    <rule ref="category/java/errorprone.xml/MissingStaticMethodInNonInstantiatableClass" /> <!-- Classi con costruttori privati non sono istanziabili e necessitano di metodi static -->
+    <rule ref="category/java/errorprone.xml/OverrideBothEqualsAndHashcode" />           <!-- Fare override sia di equals() che di hashCode() oppure di nessuno dei due -->
+    <rule ref="category/java/errorprone.xml/ProperCloneImplementation" />               <!-- Il metodo clone() deve invocare super.clone() -->
+    <rule ref="category/java/errorprone.xml/SingleMethodSingleton" />                   <!-- Il metodo getInstance() é overloaded ed ogni volta crea un nuovo oggetto -->
+    <rule ref="category/java/errorprone.xml/SingletonClassReturningNewInstance" />      <!-- Il metodo getInstance() é overloaded ed ogni volta crea un nuovo oggetto -->
+    <rule ref="category/java/errorprone.xml/StringBufferInstantiationWithChar" />       <!-- Utilizzare CHAR nel costruttore di StringBuilder lo converte in INT e assegna il valore alla LENGHT dello StringBuilder -->
+    <rule ref="category/java/errorprone.xml/UseEqualsToCompareStrings" />               <!-- Non usare == e != per le stringhe -->
+
+    <!-- FINISH ERROR PRONE RULES -->
+
+    <!-- MULTITHREADING RULES -->
+
+    <!-- FINISH MULTITHREADING RULES -->
+
+    <!-- CODESTYLE RULES -->
+
+    <!-- FINISH CODESTYLE RULES -->
+
+    <!-- PERFORMANCE RULES -->
+    <rule ref="category/java/performance.xml/AvoidArrayLoops" />                        <!-- usare copyOf per Array -->
+    <rule ref="category/java/performance.xml/BigIntegerInstantiation" />                <!-- Oggetti predefiniti della classe BigInteger -->
+    <rule ref="category/java/performance.xml/BooleanInstantiation" />                   <!-- Utilizzo della classe Boolean -->
+    <rule ref="category/java/performance.xml/OptimizableToArrayCall" />                 <!-- Ottimizzazione sulla creazione degli array -->
+    <rule ref="category/java/performance.xml/StringInstantiation" />                    <!-- Regola sulle stringhe (istanziazione) -->
+    <rule ref="category/java/performance.xml/StringToString" />                         <!-- Regola sulle stringhe (toString) -->
+    <rule ref="category/java/performance.xml/UseArraysAsList" />                        <!-- Utilizzare Arrays.asList per la creazione di ArrayList -->
+    <rule ref="category/java/performance.xml/UselessStringValueOf" />                   <!-- Talmente idiota e inutile che non va spiegata -->
+    <rule ref="category/java/performance.xml/UseStringBufferLength" />                  <!-- Hai presente la regola UselessStringValueOf -> ECCO -->
+
+    <!-- FINISH PERFORMANCE RULES -->
+
+    <!-- DESIGN RULES -->
+    <rule ref="category/java/design.xml/GodClass" />                                    <!-- Per invocazione invane -->
+    <rule ref="category/java/design.xml/CyclomaticComplexity">
+        <properties>
+            <property name="classReportLevel" value="350" />
+            <property name="methodReportLevel" value="50" />
+            <property name="cycloOptions" value="" />
+        </properties>
+    </rule>
+
+    <!-- FINISH DESIGN RULES -->
+
 
 </ruleset>
